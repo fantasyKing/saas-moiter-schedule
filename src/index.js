@@ -28,4 +28,12 @@ process.on('SIGINT', () => {
   process.exit(0);
 });
 
+process.on('uncaughtException', err => {
+  logger.error({ err }, 'uncaughtException:');
+});
+
+process.on('unhandledRejection', (reason, p) => {
+  console.log('Unhandled Rejection at: Promise', p, 'reason:', reason);
+});
+
 main();
