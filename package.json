@@ -4,7 +4,8 @@
   "description": "schedule to get pm2 process status",
   "main": "./src/index.js",
   "scripts": {
-    "test": "ava"
+    "test": "ava",
+    "start": "babel-node ./src/index.js"
   },
   "repository": {
     "type": "git",
@@ -23,6 +24,8 @@
   "homepage": "https://github.com/fantasyking/saas-moniter-schedule#readme",
   "dependencies": {
     "babel-runtime": "^6.6.1",
+    "mongoose": "^4.9.9",
+    "request": "^2.81.0",
     "simple-logger": "github:fantasyKing/simple-logger"
   },
   "devDependencies": {
