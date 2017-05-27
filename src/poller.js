@@ -20,7 +20,8 @@ class Poller {
   async pollServerStatus(name, host, scheduler) {
     try {
       logger.debug('start polling host', host);
-      const serverStatus = await request.get(host);
+      const hostFormat = `http://${host}:9615`;
+      const serverStatus = await request.get(hostFormat);
 
       const result = { name, hostIp: host, monitInfo: serverStatus };
       scheduler.emit('polled', result); // go to analyzed

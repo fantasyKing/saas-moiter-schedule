@@ -63,11 +63,7 @@ class Scheduler extends EventEmitter {
 
   anaylze = async (data) => {
     try {
-      const result = await this.Analyzer.analyze(data);
-
-      if (result) {
-        this.emit('anaylzed', result);
-      }
+      await this.Analyzer.analyze(data, this);
     } catch (err) {
       this.emit('error', { key: 'Schedule.anaylze.error', err });
     }

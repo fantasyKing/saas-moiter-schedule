@@ -5,11 +5,12 @@ class Dispatcher {
 
   /**
    * 将监控数据通过socket发送给客户端
-   * @param {Object} data
+   * @param {Object} params
    */
-  async dispatch(data) {
+  async dispatch(params) {
     try {
-      logger.debug('dispatch data---->', data);
+      const { type, data } = params;
+      logger.debug('dispatch data---->', type, data);
     } catch (err) {
       throw err;
     }
