@@ -1,10 +1,12 @@
 /**
  * server: { name, hostname, uptime, ip, cpu_num }
- * server_info: { hostname, ip, loadavg_0, loadavg_1, loadavg_2, total_mem, free_mem }
  * process: { app_name, hostname, ip, pid, memory_usage, cpu_usage, status }
  * metadata: { app_name, hostname, ip, restart, uptime, exec_mode, node_version, unstable_restart }
- * metrics: { app_name, hostname, ip, loop_delay, qps, port, http_latency, network_download, network_upload }
- * pm2_process_metrics: { app_name, hostname, ip, loop_delay, cpu_usage, operating_system, avail_disk, used_space, free_memory, used_memory, network_in, network_out, total_processes, global_size, files_count }
+ */
+
+/**
+ * metrics: { app_name, hostname, ip, loop_delay, qps, port, http_latency, network_download, network_upload, global_size, files_count }
+ * server_info: { hostname, ip, loadavg_0, loadavg_1, loadavg_2, total_mem, free_mem, cpu_usage, operating_system, avail_disk, used_space, free_memory, used_memory, network_in, network_out, total_processes  }
  */
 
 const PM2PROCESS = [
@@ -14,23 +16,23 @@ const PM2PROCESS = [
 ];
 
 const axmMap = {
-  'Loop delay': 'loop_delay',
-  QPS: 'qps',
-  'Open ports': 'port',
-  'Network Download': 'network_download',
-  'Network Upload': 'network_upload',
-  'pmx:http:latency': 'http_latency',
-  'CPU usage': 'cpu_usage',
-  'Operating System': 'operating_system',
-  'Avail. Disk': 'avail_disk',
-  'Used space': 'used_space',
-  'Free memory': 'free_memory',
-  'Used memory': 'used_memory',
-  'network in': 'network_in',
-  'network out': 'network_out',
-  'Total Processes': 'total_processes',
-  'Global logs size': 'global_size',
-  'Files count': 'files_count'
+  'Loop delay': 'loop_delay', // 1.47ms
+  QPS: 'qps', // '100'
+  'Open ports': 'port', // 50152
+  'Network Download': 'network_download', // 5.5 MB/s
+  'Network Upload': 'network_upload', // 5.5 MB/s
+  'pmx:http:latency': 'http_latency', // 234 ms
+  'CPU usage': 'cpu_usage', // 33.33%
+  'Operating System': 'operating_system', // Ubuntu 14.04
+  'Avail. Disk': 'avail_disk', // 68.4%
+  'Used space': 'used_space', // 5.1GB / 19.6GB
+  'Free memory': 'free_memory', // 30.2%
+  'Used memory': 'used_memory', // 0.7GB / 1.0GB
+  'network in': 'network_in', // 0.02MB/s
+  'network out': 'network_out', // 0.02MB/s
+  'Total Processes': 'total_processes', // 106
+  'Global logs size': 'global_size', // 140.13 MB
+  'Files count': 'files_count' // 31
 };
 
 class Analyzer {
@@ -70,13 +72,11 @@ class Analyzer {
         total_mem,
         free_mem
       };
-      scheduler.emit('anaylzed', { type: 'server_info', data: server_info });
 
       for (const proce of processes) {
         let process_info = {};
         let metadata = {};
         const metrics = {};
-        const pm2_process_metrics = {};
 
         const app_name = proce.name;
         const pid = proce.pid;
@@ -98,21 +98,16 @@ class Analyzer {
         scheduler.emit('anaylzed', { type: 'metadata', data: metadata });
 
         const axm_monitor = proce.pm2_env.axm_monitor;
-        const pmx_module = proce.pm2_env.pmx_module;
 
-        if (pmx_module || PM2PROCESS.indexOf(app_name) !== -1) {
+        if (PM2PROCESS[1] === app_name) {
           for (const key of Object.keys(axm_monitor)) {
             if (!axmMap[key]) {
               continue;
             }
-            pm2_process_metrics[axmMap[key]] = axm_monitor[key].value;
+            server_info[axmMap[key]] = axm_monitor[key].value;
           }
 
-          pm2_process_metrics.app_name = app_name;
-          pm2_process_metrics.hostname = hostname;
-          pm2_process_metrics.ip = ip;
-
-          scheduler.emit('anaylzed', { type: 'pm2_process_metrics', data: pm2_process_metrics });
+          scheduler.emit('anaylzed', { type: 'server_info', data: server_info });
           continue;
         }
 

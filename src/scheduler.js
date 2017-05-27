@@ -4,6 +4,7 @@ import config from './config';
 import Loader from './loader';
 import Poller from './poller';
 import Analyzer from './analyzer';
+import Formater from './formater';
 import Dispatcher from './dispatcher';
 
 const { pollInterval = 0.9, scheduleInterval = 60 * 60 } = config;
@@ -14,12 +15,15 @@ class Scheduler extends EventEmitter {
     this.Poller = new Poller(this);
     this.Analyzer = new Analyzer(this);
     this.Dispatcher = new Dispatcher(this);
+    this.Formater = new Formater(this);
 
     this.on('loaded', this.poll);
 
     this.on('polled', this.anaylze);
 
-    this.on('anaylzed', this.dispatch);
+    this.on('anaylzed', this.format);
+
+    this.on('formated', this.dispatch);
 
     this.on('error', this.handlerError);
   }
@@ -69,6 +73,14 @@ class Scheduler extends EventEmitter {
     }
   }
 
+  format = async (data) => {
+    try {
+      await this.Formater.format(data, this);
+    } catch (err) {
+      this.emit('error', { key: 'Schedule.format.error', err });
+    }
+  }
+
   dispatch = async (data) => {
     try {
       await this.Dispatcher.dispatch(data);
@@ -80,6 +92,7 @@ class Scheduler extends EventEmitter {
   handlerError = (data) => {
     const { key, err } = data;
     logger.error(key, err);
+    process.exit();
   }
 }
 
