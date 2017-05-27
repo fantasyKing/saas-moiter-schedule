@@ -24,6 +24,7 @@
   "homepage": "https://github.com/fantasyking/saas-moniter-schedule#readme",
   "dependencies": {
     "babel-runtime": "^6.6.1",
+    "influx": "^5.0.7",
     "mongoose": "^4.9.9",
     "request": "^2.81.0",
     "simple-logger": "github:fantasyKing/simple-logger"

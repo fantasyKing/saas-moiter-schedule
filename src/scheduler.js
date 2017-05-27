@@ -7,7 +7,7 @@ import Analyzer from './analyzer';
 import Formater from './formater';
 import Dispatcher from './dispatcher';
 
-const { pollInterval = 0.9, scheduleInterval = 60 * 60 } = config;
+const { pollInterval = 2, scheduleInterval = 60 * 60 } = config;
 
 class Scheduler extends EventEmitter {
   assembly() {
