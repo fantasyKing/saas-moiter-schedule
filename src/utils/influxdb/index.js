@@ -6,6 +6,9 @@ const schema = [
   {
     measurement: 'server',
     fields: {
+      name: FieldType.STRING,
+      hostname: FieldType.STRING,
+      ip: FieldType.STRING,
       uptime: FieldType.INTEGER,
       cpu_num: FieldType.INTEGER,
     },
@@ -18,6 +21,10 @@ const schema = [
   {
     measurement: 'process',
     fields: {
+      app_name: FieldType.STRING,
+      hostname: FieldType.STRING,
+      ip: FieldType.STRING,
+      pm2_id: FieldType.INTEGER,
       pid: FieldType.INTEGER,
       memory_usage: FieldType.INTEGER,
       cpu_usage: FieldType.INTEGER,
@@ -27,12 +34,16 @@ const schema = [
       'app_name',
       'hostname',
       'ip',
-      'pm_id'
+      'pm_id_tag'
     ]
   },
   {
     measurement: 'metadata',
     fields: {
+      app_name: FieldType.STRING,
+      hostname: FieldType.STRING,
+      ip: FieldType.STRING,
+      pm2_id: FieldType.INTEGER,
       restart: FieldType.INTEGER,
       uptime: FieldType.FLOAT,
       exec_mode: FieldType.STRING,
@@ -43,12 +54,16 @@ const schema = [
       'app_name',
       'hostname',
       'ip',
-      'pm_id'
+      'pm_id_tag'
     ]
   },
   {
     measurement: 'metrics',
     fields: {
+      app_name: FieldType.STRING,
+      hostname: FieldType.STRING,
+      ip: FieldType.STRING,
+      pm2_id: FieldType.INTEGER,
       loop_delay: FieldType.FLOAT,
       qps: FieldType.FLOAT,
       port: FieldType.STRING,
@@ -62,15 +77,17 @@ const schema = [
       'app_name',
       'hostname',
       'ip',
-      'pm_id'
+      'pm_id_tag'
     ]
   },
   {
     measurement: 'server_info',
     fields: {
+      hostname: FieldType.STRING,
+      ip: FieldType.STRING,
       loadavg_0: FieldType.FLOAT,
       loadavg_1: FieldType.FLOAT,
-      loadavg_2: FieldType.STRING,
+      loadavg_2: FieldType.FLOAT,
       total_mem: FieldType.INTEGER,
       free_mem: FieldType.INTEGER,
       cpu_usage: FieldType.FLOAT,

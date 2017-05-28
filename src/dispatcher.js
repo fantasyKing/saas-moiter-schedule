@@ -35,7 +35,7 @@ class Dispatcher {
         {
           measurement: 'server',
           tags: { name: params.name, hostname: params.hostname, ip: params.ip },
-          fields: { uptime: params.uptime, cpu_num: params.cpu_num }
+          fields: { name: params.name, hostname: params.hostname, ip: params.ip, uptime: params.uptime, cpu_num: params.cpu_num }
         }
       ], {
         database: 'moniter',
@@ -52,8 +52,8 @@ class Dispatcher {
       await InfluxDb.writePoints([
         {
           measurement: 'process',
-          tags: { app_name: params.app_name, hostname: params.hostname, ip: params.ip, pm_id: params.pm_id },
-          fields: { pid: params.pid, memory_usage: params.memory_usage, cpu_usage: params.cpu_usage, status: params.status }
+          tags: { app_name: params.app_name, hostname: params.hostname, ip: params.ip, pm_id_tag: params.pm_id },
+          fields: { app_name: params.app_name, hostname: params.hostname, ip: params.ip, pm_id: params.pm_id, pid: params.pid, memory_usage: params.memory_usage, cpu_usage: params.cpu_usage, status: params.status }
         }
       ], {
         database: 'moniter',
@@ -70,8 +70,8 @@ class Dispatcher {
       await InfluxDb.writePoints([
         {
           measurement: 'metadata',
-          tags: { app_name: params.app_name, hostname: params.hostname, ip: params.ip, pm_id: params.pm_id },
-          fields: { restart: params.restart, uptime: params.uptime, exec_mode: params.exec_mode, node_version: params.node_version, unstable_restart: params.unstable_restart }
+          tags: { app_name: params.app_name, hostname: params.hostname, ip: params.ip, pm_id_tag: params.pm_id },
+          fields: { app_name: params.app_name, hostname: params.hostname, ip: params.ip, pm_id: params.pm_id, restart: params.restart, uptime: params.uptime, exec_mode: params.exec_mode, node_version: params.node_version, unstable_restart: params.unstable_restart }
         }
       ], {
         database: 'moniter',
@@ -90,6 +90,8 @@ class Dispatcher {
           measurement: 'server_info',
           tags: { hostname: params.hostname, ip: params.ip },
           fields: {
+            hostname: params.hostname,
+            ip: params.ip,
             loadavg_0: params.loadavg_0,
             loadavg_1: params.loadavg_1,
             loadavg_2: params.loadavg_2,
@@ -121,8 +123,9 @@ class Dispatcher {
       await InfluxDb.writePoints([
         {
           measurement: 'metrics',
-          tags: { app_name: params.app_name, hostname: params.hostname, ip: params.ip, pm_id: params.pm_id },
+          tags: { app_name: params.app_name, hostname: params.hostname, ip: params.ip, pm_id_tag: params.pm_id },
           fields: {
+            app_name: params.app_name, hostname: params.hostname, ip: params.ip, pm_id: params.pm_id,
             loop_delay: params.loop_delay,
             qps: params.qps,
             port: params.port,

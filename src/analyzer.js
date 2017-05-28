@@ -1,11 +1,11 @@
 /**
  * server: { name, hostname, uptime, ip, cpu_num }
  * process: { app_name, hostname, ip, pid, pm_id, memory_usage, cpu_usage, status }
- * metadata: { app_name, hostname, ip, restart, uptime, exec_mode, node_version, unstable_restart }
+ * metadata: { app_name, hostname, ip, pm_id restart, uptime, exec_mode, node_version, unstable_restart }
  */
 
 /**
- * metrics: { app_name, hostname, ip, loop_delay, qps, port, http_latency, network_download, network_upload, global_size, files_count }
+ * metrics: { app_name, hostname, ip, pm_id loop_delay, qps, port, http_latency, network_download, network_upload, global_size, files_count }
  * server_info: { hostname, ip, loadavg_0, loadavg_1, loadavg_2, total_mem, free_mem, cpu_usage, operating_system, avail_disk, used_space, free_memory, used_memory, network_in, network_out, total_processes  }
  */
 
@@ -32,8 +32,7 @@ const axmMap = {
   'network out': 'network_out', // 0.02MB/s
   'Total Processes': 'total_processes', // 106
   'Global logs size': 'global_size', // 140.13 MB
-  'Files count': 'files_count', // 31
-  pm_id: 'pm_id'
+  'Files count': 'files_count' // 31
 };
 
 class Analyzer {
@@ -95,7 +94,7 @@ class Analyzer {
         const node_version = proce.pm2_env.node_version;
         const unstable_restart = proce.pm2_env.unstable_restarts;
 
-        metadata = { app_name, hostname, ip, restart, unstable_restart, uptime, exec_mode, node_version };
+        metadata = { app_name, hostname, ip, restart, unstable_restart, uptime, exec_mode, node_version, pm_id };
         scheduler.emit('anaylzed', { type: 'metadata', data: metadata });
 
         const axm_monitor = proce.pm2_env.axm_monitor;
@@ -122,6 +121,7 @@ class Analyzer {
         metrics.app_name = app_name;
         metrics.hostname = hostname;
         metrics.ip = ip;
+        metrics.pm_id = pm_id;
         scheduler.emit('anaylzed', { type: 'metrics', data: metrics });
       }
       return null;

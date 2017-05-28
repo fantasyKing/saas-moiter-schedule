@@ -63,6 +63,7 @@ class Formater {
 
     data.files_count = files_count || 0;
 
+
     scheduler.emit('formated', { type, data });
   }
 
