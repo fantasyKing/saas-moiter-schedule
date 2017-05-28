@@ -52,7 +52,7 @@ class Dispatcher {
       await InfluxDb.writePoints([
         {
           measurement: 'process',
-          tags: { app_name: params.app_name, hostname: params.hostname, ip: params.ip },
+          tags: { app_name: params.app_name, hostname: params.hostname, ip: params.ip, pm_id: params.pm_id },
           fields: { pid: params.pid, memory_usage: params.memory_usage, cpu_usage: params.cpu_usage, status: params.status }
         }
       ], {
@@ -70,7 +70,7 @@ class Dispatcher {
       await InfluxDb.writePoints([
         {
           measurement: 'metadata',
-          tags: { app_name: params.app_name, hostname: params.hostname, ip: params.ip },
+          tags: { app_name: params.app_name, hostname: params.hostname, ip: params.ip, pm_id: params.pm_id },
           fields: { restart: params.restart, uptime: params.uptime, exec_mode: params.exec_mode, node_version: params.node_version, unstable_restart: params.unstable_restart }
         }
       ], {
@@ -121,7 +121,7 @@ class Dispatcher {
       await InfluxDb.writePoints([
         {
           measurement: 'metrics',
-          tags: { app_name: params.app_name, hostname: params.hostname, ip: params.ip },
+          tags: { app_name: params.app_name, hostname: params.hostname, ip: params.ip, pm_id: params.pm_id },
           fields: {
             loop_delay: params.loop_delay,
             qps: params.qps,

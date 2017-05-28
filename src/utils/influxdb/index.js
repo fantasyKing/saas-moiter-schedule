@@ -26,7 +26,8 @@ const schema = [
     tags: [
       'app_name',
       'hostname',
-      'ip'
+      'ip',
+      'pm_id'
     ]
   },
   {
@@ -41,7 +42,8 @@ const schema = [
     tags: [
       'app_name',
       'hostname',
-      'ip'
+      'ip',
+      'pm_id'
     ]
   },
   {
@@ -59,7 +61,8 @@ const schema = [
     tags: [
       'app_name',
       'hostname',
-      'ip'
+      'ip',
+      'pm_id'
     ]
   },
   {

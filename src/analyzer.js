@@ -1,6 +1,6 @@
 /**
  * server: { name, hostname, uptime, ip, cpu_num }
- * process: { app_name, hostname, ip, pid, memory_usage, cpu_usage, status }
+ * process: { app_name, hostname, ip, pid, pm_id, memory_usage, cpu_usage, status }
  * metadata: { app_name, hostname, ip, restart, uptime, exec_mode, node_version, unstable_restart }
  */
 
@@ -32,7 +32,8 @@ const axmMap = {
   'network out': 'network_out', // 0.02MB/s
   'Total Processes': 'total_processes', // 106
   'Global logs size': 'global_size', // 140.13 MB
-  'Files count': 'files_count' // 31
+  'Files count': 'files_count', // 31
+  pm_id: 'pm_id'
 };
 
 class Analyzer {
