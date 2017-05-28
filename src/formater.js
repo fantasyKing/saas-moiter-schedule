@@ -46,30 +46,22 @@ class Formater {
   }
 
   formatMetrics(type, data, scheduler) {
-    const { loop_delay, http_latency, qps, network_download, network_upload, global_size } = data;
-    if (loop_delay) {
-      data.loop_delay = this.__timeFormat(loop_delay);
-    }
+    const { loop_delay, http_latency, qps, network_download, network_upload, global_size, port, files_count } = data;
+    data.loop_delay = loop_delay && this.__timeFormat(loop_delay) || 0;
 
-    if (network_download) {
-      data.network_download = this.__networkFormat(network_download);
-    }
+    data.network_download = network_download && this.__networkFormat(network_download) || 0;
 
-    if (network_upload) {
-      data.network_upload = this.__networkFormat(network_upload);
-    }
+    data.network_upload = network_upload && this.__networkFormat(network_upload) || 0;
 
-    if (global_size) {
-      data.global_size = this.__sizeFormat(global_size);
-    }
+    data.global_size = global_size && this.__sizeFormat(global_size) || 0;
 
-    if (http_latency) {
-      data.http_latency = this.__timeFormat(http_latency);
-    }
+    data.http_latency = http_latency && this.__timeFormat(http_latency) || 0;
 
-    if (qps) {
-      data.qps = parseFloat(qps);
-    }
+    data.qps = qps && parseFloat(qps) || 0;
+
+    data.port = port || '';
+
+    data.files_count = files_count || 0;
 
     scheduler.emit('formated', { type, data });
   }

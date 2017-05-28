@@ -13,23 +13,18 @@ class Dispatcher {
     try {
       const { type, data } = params;
       logger.debug('dispatch data---->', type, data);
-      // if (type === 'process') {
-      //   await this.writeProcess(data);
-      // } else if (type === 'server') {
-      //   await this.writeServer(data);
-      // } else if (type === 'metadata') {
-      //   await this.writeMetadata(data);
-      // } else if (type === 'server_info') {
-      //   await this.writeServerInfo(data);
-      // } else if (type === 'metrics') {
-      //   await this.writeMetrics(data);
-      // }
-
-      if (type === 'server') {
+      if (type === 'process') {
+        await this.writeProcess(data);
+      } else if (type === 'server') {
         await this.writeServer(data);
+      } else if (type === 'metadata') {
+        await this.writeMetadata(data);
+      } else if (type === 'server_info') {
+        await this.writeServerInfo(data);
+      } else if (type === 'metrics') {
+        await this.writeMetrics(data);
       }
     } catch (err) {
-      console.log(err);
       throw err;
     }
   }
@@ -43,8 +38,8 @@ class Dispatcher {
           fields: { uptime: params.uptime, cpu_num: params.cpu_num }
         }
       ], {
-        database: 'mydb',
-        retentionPolicy: '1d',
+        database: 'moniter',
+        retentionPolicy: 'moniter',
         precision: 's'
       });
     } catch (err) {
@@ -61,8 +56,8 @@ class Dispatcher {
           fields: { pid: params.pid, memory_usage: params.memory_usage, cpu_usage: params.cpu_usage, status: params.status }
         }
       ], {
-        database: 'mydb',
-        retentionPolicy: '1d',
+        database: 'moniter',
+        retentionPolicy: 'moniter',
         precision: 's'
       });
     } catch (err) {
@@ -79,8 +74,8 @@ class Dispatcher {
           fields: { restart: params.restart, uptime: params.uptime, exec_mode: params.exec_mode, node_version: params.node_version, unstable_restart: params.unstable_restart }
         }
       ], {
-        database: 'mydb',
-        retentionPolicy: '1d',
+        database: 'moniter',
+        retentionPolicy: 'moniter',
         precision: 's'
       });
     } catch (err) {
@@ -112,8 +107,8 @@ class Dispatcher {
           }
         }
       ], {
-        database: 'mydb',
-        retentionPolicy: '1d',
+        database: 'moniter',
+        retentionPolicy: 'moniter',
         precision: 's'
       });
     } catch (err) {
@@ -139,8 +134,8 @@ class Dispatcher {
           }
         }
       ], {
-        database: 'mydb',
-        retentionPolicy: '1d',
+        database: 'moniter',
+        retentionPolicy: 'moniter',
         precision: 's'
       });
     } catch (err) {
