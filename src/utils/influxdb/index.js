@@ -45,7 +45,7 @@ const schema = [
       ip: FieldType.STRING,
       pm2_id: FieldType.INTEGER,
       restart: FieldType.INTEGER,
-      uptime: FieldType.FLOAT,
+      uptime: FieldType.INTEGER,
       exec_mode: FieldType.STRING,
       node_version: FieldType.STRING,
       unstable_restart: FieldType.INTEGER
